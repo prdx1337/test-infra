@@ -1,0 +1,32 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: microservices-platform
+build:
+  artifacts:
+    - image: order-service
+      context: services/order-service
+      docker:
+        dockerfile: Dockerfile
+    - image: payment-service
+      context: services/payment-service
+      docker:
+        dockerfile: Dockerfile
+    - image: notification-service
+      context: services/notification-service
+      docker:
+        dockerfile: Dockerfile
+    - image: user-service
+      context: services/user-service
+      docker:
+        dockerfile: Dockerfile
+  local:
+    push: false
+
+deploy:
+  kubectl: {}
+
+manifests:
+  kustomize:
+    paths:
+      - infrastructure/kubernetes/overlays/dev
